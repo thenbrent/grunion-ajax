@@ -9,8 +9,6 @@ Author URI: http://find.brentshepherd.com
 License: GPLv2 or later
 */
 
-error_log('_POST = ' . print_r( $_POST, true ) );
-
 Grunion_Ajax::init();
 
 class Grunion_Ajax {
@@ -31,8 +29,7 @@ class Grunion_Ajax {
 		add_action( 'wp_print_scripts', __CLASS__ . '::maybe_enqueue_scripts' );
 
 		add_action( 'wp_ajax_grunion-ajax', __CLASS__ . '::handle_form_submission' );
-
-		error_log('in init');
+		add_action( 'wp_ajax_nopriv_grunion-ajax', __CLASS__ . '::handle_form_submission' );
 	}
 
 
@@ -49,7 +46,7 @@ class Grunion_Ajax {
 
 		$object_name    = 'grunionAjax';
 		$script_data    = array( 
-				'loadingImageUri' => self::$grunion_dir_url . '/loading.gif',
+				'loadingImageUri' => self::$grunion_dir_url . '/loader.gif',
 				'ajaxUri'         => admin_url( 'admin-ajax.php' )
 		);
 
@@ -65,29 +62,23 @@ class Grunion_Ajax {
 	 * that saves the data (it's done as part of the shortcode).
 	 */
 	public static function handle_form_submission(){
+		global $post;
 
-		error_log('in handle_form_submission ' );
-
-		// Setup $_POST to appear as if the form had been submitted in the traditional way
+		// Setup $_POST to appear as if the form had been submitted in the traditional way... all sorts of fudging
 		parse_str( $_POST['data'], $data );
 		$_POST = array_merge( $_POST, $data );
 		unset( $_POST['action'] );
 		unset( $_POST['data'] );
+		$_REQUEST['_wpnonce'] = $_POST['_wpnonce'];
 
-//		if ( ! wp_verify_nonce( $data['_wpnonce'], 'contact-form_' . $data['contact-form-id'] ) )
-//			error_log('** INVALID NONCE **');
+		// Setup the post global for Grunion
+		$post = get_post( $_POST['contact-form-id'] );
 
-		//$post = get_post_field( $_POST[''] );
-
-		error_log('id = ' . print_r( $_POST['contact-form-id'], true ) );
-
-		error_log('post content = ' . print_r( get_post_field( 'post_content', $_POST['contact-form-id'] ) ) );
-
-		$content = do_shortcode( get_post_field( 'post_content', $_POST['contact-form-id'] ) );
+		$content = do_shortcode( $post->post_content );
 
 		error_log('content = ' . print_r( $content, true ) );
 
-		$response = array( 'success' => 'true', 'content' => $content );
+		$response = array( 'success' => 'true', 'html' => $content );
 
 		$response = json_encode( $response );
 

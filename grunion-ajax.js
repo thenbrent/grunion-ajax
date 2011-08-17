@@ -1,29 +1,31 @@
 jQuery(document).ready(function($){
-	console.log('Grunion Ajax loaded');
 
-	/* ---------------------------------- */
-	/* Set Image Background */
 	$('.contact-form').submit(function(e){
 
-		$(this).fadeTo( '200', 0.5 );
+		var $form = $(this);
 
-		console.log(e);
-		console.log($(this).serialize());
+		$(this).fadeTo('200', 0.5, function (){
+			$(':submit', $(this)).fadeOut('200', function(){
+				$(this).replaceWith('<img id="ga-loader" src="'+grunionAjax.loadingImageUri+'"/>');
+				$('#ga-loader').fadeIn('200');
 
-		$.post( grunionAjax.ajaxUri, 
-				{
-					action  : 'grunion-ajax',
-					data    : $(this).serialize()
-//					_ajax_nonce	  : motion.nonce,
-//					post_id		  : motion.post_id,
-//					context		  : context,
-//					attachment_id : attachment_id
-				}, 
-				function(response) {
-					console.log('responded');
-					console.log(response);
-				}
-		);
+				$.post( grunionAjax.ajaxUri, 
+						{
+							action  : 'grunion-ajax',
+							data    : $form.serialize()
+						},
+						function(response) {
+							$(response.html).hide();
+							$('#'+$(response.html).attr('id')).fadeOut('200', function(){
+								$('#'+$(response.html).attr('id')).html($(response.html));
+								$('#'+$(response.html).attr('id')).fadeIn('200');
+							});
+						}
+				);
+
+			});
+		});
+
 		return false;
 	});
 });
