@@ -38,22 +38,21 @@ class Grunion_Ajax {
 	 */
 	public static function maybe_enqueue_scripts() {
 
-		$grunion_handle = 'grunion-ajax';
+		if( self::contains_grunion_shortcode() ){
+			$grunion_handle = 'grunion-ajax';
 
-		if( self::contains_grunion_shortcode() ) {
 			wp_enqueue_script( $grunion_handle, self::$grunion_dir_url . '/grunion-ajax.js', array( 'jquery' ) );
+			$object_name    = 'grunionAjax';
+			$script_data    = array( 
+					'loadingImageUri' => self::$grunion_dir_url . '/loader.gif',
+					'ajaxUri'         => admin_url( 'admin-ajax.php' )
+			);
+
+			if( function_exists( 'wp_add_script_data' ) ) // WordPress 3.3 and newer
+				wp_add_script_data( $grunion_handle, $object_name, $script_data );
+			else
+				wp_localize_script( $grunion_handle, $object_name, $script_data );
 		}
-
-		$object_name    = 'grunionAjax';
-		$script_data    = array( 
-				'loadingImageUri' => self::$grunion_dir_url . '/loader.gif',
-				'ajaxUri'         => admin_url( 'admin-ajax.php' )
-		);
-
-		if( function_exists( 'wp_add_script_data' ) ) // WordPress 3.3 and newer
-			wp_add_script_data( $grunion_handle, $object_name, $script_data );
-		else
-			wp_localize_script( $grunion_handle, $object_name, $script_data );
 	}
 
 
@@ -64,7 +63,7 @@ class Grunion_Ajax {
 	public static function handle_form_submission(){
 		global $post;
 
-		// Setup $_POST to appear as if the form had been submitted in the traditional way... all sorts of fudging
+		// Setup $_POST & $_REQUEST to appear as if the form had been submitted in the traditional way... yep, all sorts of fudge
 		parse_str( $_POST['data'], $data );
 		$_POST = array_merge( $_POST, $data );
 		unset( $_POST['action'] );
@@ -76,7 +75,7 @@ class Grunion_Ajax {
 
 		$content = do_shortcode( $post->post_content );
 
-		error_log('content = ' . print_r( $content, true ) );
+		$content = apply_filters( 'grunion_ajax_confirmation', $content );
 
 		$response = array( 'success' => 'true', 'html' => $content );
 

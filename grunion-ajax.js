@@ -2,12 +2,14 @@ jQuery(document).ready(function($){
 
 	$('.contact-form').submit(function(e){
 
-		var $form = $(this);
+		var $form  = $(this),
+			img_id = 'ga-loader',
+			div_id = $(this).parent().attr('id');
 
 		$(this).fadeTo('200', 0.5, function (){
 			$(':submit', $(this)).fadeOut('200', function(){
-				$(this).replaceWith('<img id="ga-loader" src="'+grunionAjax.loadingImageUri+'"/>');
-				$('#ga-loader').fadeIn('200');
+				$(this).replaceWith('<img id="'+img_id+'" src="'+grunionAjax.loadingImageUri+'"/>');
+				$('#'+img_id).fadeIn('200');
 
 				$.post( grunionAjax.ajaxUri, 
 						{
@@ -16,9 +18,9 @@ jQuery(document).ready(function($){
 						},
 						function(response) {
 							$(response.html).hide();
-							$('#'+$(response.html).attr('id')).fadeOut('200', function(){
-								$('#'+$(response.html).attr('id')).html($(response.html));
-								$('#'+$(response.html).attr('id')).fadeIn('200');
+							$('#'+div_id).fadeOut('200', function(){
+								$('#'+div_id).html($(response.html));
+								$('#'+div_id).fadeIn('200');
 							});
 						}
 				);
