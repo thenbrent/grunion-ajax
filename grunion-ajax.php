@@ -97,7 +97,7 @@ class Grunion_Ajax {
 		if( empty( $content ) && is_object( $post ) )
 			$content = $post->post_content;
 
-		if( strpos( $content, '[contact-form' ) )
+		if( strpos( $content, '[contact-form' ) !== false )
 			return true;
 		else
 			return false;
