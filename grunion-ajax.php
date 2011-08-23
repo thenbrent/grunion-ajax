@@ -14,7 +14,7 @@ Grunion_Ajax::init();
 class Grunion_Ajax {
 
 	/**
-	 * URL to the directory housing Chosen Javascript files.
+	 * URL to the directory housing Grunion Ajax files.
 	 */
 	public static $grunion_dir_url;
 
@@ -34,7 +34,7 @@ class Grunion_Ajax {
 
 
 	/**
-	 * If the post/page contains a select element, enqueue the chosen & jquery scripts.
+	 * If the post/page contains a Grunion Contact Form, enqueue the ajax submission script.
 	 */
 	public static function maybe_enqueue_scripts() {
 
