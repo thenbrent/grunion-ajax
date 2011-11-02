@@ -73,7 +73,14 @@ class Grunion_Ajax {
 		// Setup the post global for Grunion
 		$post = get_post( $_POST['contact-form-id'] );
 
+		// Dirty dirty hack to work around a bug in Grunion's style printing that breaks ajax
+		$old_request = $_REQUEST['action'];
+		$_REQUEST['action'] = 'grunion_shortcode_to_json';
+
 		$content = do_shortcode( $post->post_content );
+
+		// Now we can restore the real action
+		$_REQUEST['action'] = $old_request;
 
 		$content = apply_filters( 'grunion_ajax_confirmation', $content );
 
@@ -102,5 +109,4 @@ class Grunion_Ajax {
 		else
 			return false;
 	}
-
 }
