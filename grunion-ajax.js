@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 
-	$('.contact-form').submit(function(e){
+	$('body').on('submit', '.contact-form', function (e) {
 
 		var $form  = $(this),
 			img_id = 'ga-loader',

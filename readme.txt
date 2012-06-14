@@ -3,7 +3,7 @@ Contributors: thenbrent
 Tags: grunion contact form, grunion, ajax, jquery
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 0.2
+Stable tag: 1.0
 
 Using Grunion Contact Form? Make form submission slick with Grunion Ajax.
 
@@ -30,6 +30,9 @@ You know the drill.
 
 == Changelog ==
 
+= 1.0 =
+Page no longer being submitted if there has been an error when submitted the form is submitted and then the form is submitted again. Props Matthew Burrows from [Electric Studio](http://www.electricstudio.co.uk/).
+
 = 0.2 =
 Working around print_scripts issue in Grunion 2.3.
 
@@ -37,6 +40,9 @@ Working around print_scripts issue in Grunion 2.3.
 First version.
 
 == Upgrade Notice ==
+
+= 1.0 =
+Please upgrade to prevent page refreshes when a form has previously been submitted and an error occurred in submission.
 
 = 0.2 =
 Please upgrade to fix an incompatibility issues with version 2.3 of Grunion Contact Form.
