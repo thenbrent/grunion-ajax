@@ -77,14 +77,27 @@ class Grunion_Ajax {
 		$old_request = $_REQUEST['action'];
 		$_REQUEST['action'] = 'grunion_shortcode_to_json';
 
-		$content = do_shortcode( $post->post_content );
+		$content = do_shortcode( wpautop( $post->post_content ) );
 
 		// Now we can restore the real action
 		$_REQUEST['action'] = $old_request;
 
+		// We have an error in the contact form
+		if ( strpos( $content, 'form-errors' ) !== false ) {
+			$result   = 'error';
+			preg_match( '%((\<ul class=\'form-errors)(.|' . PHP_EOL . ')*?\</ul\>)%', $content, $matches );
+			$content  = "<div class='form-error'><h3>" . __( 'Error!' ) . "</h3>";
+			$content .= $matches[0];
+			$content .= "</div>";
+		} else {
+			$result   = 'success';
+			preg_match( '%((\<div id=\'contact-form)(.|' . PHP_EOL . ')*?\</div\>)%', $content, $matches );
+			$content = $matches[0];
+		}
+
 		$content = apply_filters( 'grunion_ajax_confirmation', $content );
 
-		$response = array( 'success' => 'true', 'html' => $content );
+		$response = array( 'result' => $result, 'html' => $content );
 
 		$response = json_encode( $response );
 
