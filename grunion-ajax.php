@@ -18,7 +18,6 @@ class Grunion_Ajax {
 	 */
 	public static $grunion_dir_url;
 
-
 	/**
 	 * Setup the class variables & hook functions.
 	 */
@@ -38,14 +37,14 @@ class Grunion_Ajax {
 	 */
 	public static function maybe_enqueue_scripts() {
 
-		if( self::contains_grunion_shortcode() ){
+		if ( self::contains_grunion_shortcode() ){
 			$grunion_handle = 'grunion-ajax';
 
 			wp_enqueue_script( $grunion_handle, self::$grunion_dir_url . '/grunion-ajax.js', array( 'jquery' ) );
 			$object_name    = 'grunionAjax';
 			$script_data    = array( 
-					'loadingImageUri' => self::$grunion_dir_url . '/loader.gif',
-					'ajaxUri'         => admin_url( 'admin-ajax.php' )
+				'loadingImageUri' => self::$grunion_dir_url . '/loader.gif',
+				'ajaxUri'         => admin_url( 'admin-ajax.php' )
 			);
 
 			if( function_exists( 'wp_add_script_data' ) ) // WordPress 3.3 and newer
@@ -54,7 +53,6 @@ class Grunion_Ajax {
 				wp_localize_script( $grunion_handle, $object_name, $script_data );
 		}
 	}
-
 
 	/**
 	 * Handles the submission of the grunion contact form, in lieu of there being a function within Grunion Contact Form
@@ -73,7 +71,7 @@ class Grunion_Ajax {
 		// Setup the post global for Grunion
 		$post = get_post( $_POST['contact-form-id'] );
 
-		// Dirty dirty hack to work around a bug in Grunion's style printing that breaks ajax
+		// Dirty dirty hack to work around Grunion's style printing that breaks ajax
 		$old_request = $_REQUEST['action'];
 		$_REQUEST['action'] = 'grunion_shortcode_to_json';
 
@@ -107,19 +105,20 @@ class Grunion_Ajax {
 		exit();
 	}
 
-
 	/**
 	 * Checks the post content to see if it contains a select element. 
 	 */
 	private static function contains_grunion_shortcode( $content = '' ){
 		global $post;
 
-		if( empty( $content ) && is_object( $post ) )
+		if ( empty( $content ) && is_object( $post ) ) {
 			$content = $post->post_content;
+		}
 
-		if( strpos( $content, '[contact-form' ) !== false )
+		if ( strpos( $content, '[contact-form' ) !== false ) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 }

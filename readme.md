@@ -1,9 +1,9 @@
 # Ajax Submission for the WordPress Grunion Contact Form Plugin
-Contributors: thenbrent
-Tags: grunion contact form, grunion, ajax, jquery
-Requires at least: 3.1
-Tested up to: 3.2.1
-Stable tag: 0.2
+Contributors: thenbrent  
+Tags: grunion contact form, grunion, ajax, jquery  
+Requires at least: 3.1  
+Tested up to: 3.9.1  
+Stable tag: 1.3  
 
 Every time a page reloads to submit a form, a puppy dies. This plugin is the saviour of puppies. 
 

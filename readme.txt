@@ -10,9 +10,9 @@ Using Grunion Contact Form? Make form submission slick with Grunion Ajax.
 
 == Description ==
 
-Every time a page reloads to submit a form, a puppy dies. This plugin is the saviour of puppies. 
+Every time a page reloads to submit a form, a puppy dies. This plugin is the saviour of puppies.
 
-Grunion Ajax submits a [Grunion Contact Form](http://wordpress.org/extend/plugins/grunion-contact-form/) using Ajax. It makes it super fast for visitors to submit a form and in so doing, makes your site more attractive to members of the opposite sex. 
+Grunion Ajax submits a [Grunion Contact Form](http://wordpress.org/extend/plugins/grunion-contact-form/) using Ajax. It makes it super fast for visitors to submit a form.
 
 The Grunion Ajax Javascript file is only loaded if the post or page in question includes the Grunion `[contact-form]` shortcode, so it's efficient too.
 
