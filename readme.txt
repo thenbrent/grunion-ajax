@@ -3,7 +3,7 @@ Contributors: thenbrent
 Tags: grunion contact form, grunion, ajax, jquery
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 1.2
+Stable tag: 1.3
 
 Using Grunion Contact Form? Make form submission slick with Grunion Ajax.
 
