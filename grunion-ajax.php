@@ -29,8 +29,20 @@ class Grunion_Ajax {
 
 		add_action( 'wp_ajax_grunion-ajax', __CLASS__ . '::handle_form_submission' );
 		add_action( 'wp_ajax_nopriv_grunion-ajax', __CLASS__ . '::handle_form_submission' );
+
+		add_action( 'pre_get_posts', __CLASS__ . '::setup_query' );
 	}
 
+	public static function setup_query( $query ) {
+
+		if ( isset( $_REQUEST['action'] ) && 'grunion_shortcode_to_json' == $_REQUEST['action'] && isset( $_POST['contact-form-id'] ) ) {
+			$post_id = absint( $_POST['contact-form-id'] );
+			check_admin_referer( 'contact-form_' . $post_id );
+			$query->set( 'p', $post_id );
+		}
+
+		return $query;
+	}
 
 	/**
 	 * If the post/page contains a Grunion Contact Form, enqueue the ajax submission script.
@@ -67,6 +79,7 @@ class Grunion_Ajax {
 
 		// Setup the post global for Grunion
 		$post = get_post( $_POST['contact-form-id'] );
+		setup_postdata( $post );
 
 		// Dirty dirty hack to work around Grunion's style printing that breaks ajax
 		$old_request = $_REQUEST['action'];
