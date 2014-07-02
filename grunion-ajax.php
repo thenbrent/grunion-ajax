@@ -4,7 +4,7 @@ Plugin Name: Grunion Ajax
 Plugin URI: http://wordpress.org/extend/plugins/grunion-ajax/
 Description: Using Grunion Contact Form? Make form submission slick with Grunion Ajax.
 Author: Brent Shepherd
-Version: 1.2
+Version: 1.3
 Author URI: http://find.brentshepherd.com
 License: GPLv2 or later
 */

@@ -30,6 +30,9 @@ You know the drill.
 
 == Changelog ==
 
+= 1.3 =
+Fix issues when using a contact forms on a page which includes a subquery, for something like Testimonials.
+
 = 1.1 =
 Fixing issues with full post content being displayed after form submission. Better error animations.
 
@@ -43,6 +46,9 @@ Working around print_scripts issue in Grunion 2.3.
 First version.
 
 == Upgrade Notice ==
+
+= 1.3 =
+Upgrade to fix issues with contact forms on a page which include subqueries, for content like testimonials.
 
 = 1.1 =
 Upgrade to fix a bug which was duplicating post content after a form is submitted.
