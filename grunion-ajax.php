@@ -47,10 +47,7 @@ class Grunion_Ajax {
 				'ajaxUri'         => admin_url( 'admin-ajax.php' )
 			);
 
-			if( function_exists( 'wp_add_script_data' ) ) // WordPress 3.3 and newer
-				wp_add_script_data( $grunion_handle, $object_name, $script_data );
-			else
-				wp_localize_script( $grunion_handle, $object_name, $script_data );
+			wp_localize_script( $grunion_handle, $object_name, $script_data );
 		}
 	}
 
